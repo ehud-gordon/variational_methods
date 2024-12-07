@@ -1,0 +1,55 @@
+\documentclass{article}
+\usepackage{preamble}
+\input{preamble}
+\graphicspath{ {images/} }
+%%%%%%%%%%%%%%%% Document %%%%%%%%%%%%%%%%
+\begin{document}
+\begin{center}
+{\huge \underline{H}}
+\end{center}
+
+\section{Question 1 (Linear Diffusion)}
+Let $u(x,t)$ be a real-valued function. Consider the 1D, unbounded domain, linear diffusion, defined by
+\begin{equation}
+u_t = u_{xx}, \quad u(x,0) = f(x), \quad t \in [0, \infty)
+\end{equation}
+where \(t\) is the time variable, \(x\) is the spatial variable, \(u_t\) and \(u_{xx}\) are respectively the time derivative and the second spatial derivative of \(u\), and the function \(f(x)\) is the initial condition.
+
+(a) For a real-valued function \(u \in \mathbb{R}\), show that the solution of the above PDE is a Gaussian convolution with the initial condition, namely
+\begin{equation}
+u(x,t) = f(x) * g_\sigma(t)(x)
+\end{equation}
+where \(g_\sigma(t)\) is the Gaussian kernel.
+
+\textbf{\ul{Solution}:} 
+
+
+
+Then, find the relation between the time variable \(t\) and the standard deviation \(\sigma\).
+
+(b) Assume the initial condition \(f(x)\) is
+
+\begin{equation}
+f(x) = \sin(\omega_1 x) + \sin(\omega_2 x)
+\end{equation}
+
+where \(\omega_1, \omega_2\) are positive constants. Use $u(x,t) = f(x) * g_\sigma(t)(x)
+ $ to show that \(u(t, x)\) is 
+
+\begin{equation}
+u(x,t) = \sin(\omega_1 x)e^{-\omega_1^2 t} + \sin(\omega_2 x)e^{-\omega_2^2 t}.
+\end{equation}
+
+(c) For the solution:
+\[
+  u(x,t) = \sin(\omega_1 x)e^{-\omega_1^2 t} + \sin(\omega_2 x)e^{-\omega_2^2 t}.
+\]
+
+1. Write the explicit backward-difference in time expression of \(u(x, \Delta t)\). Keep the spatial coordinates continuous.
+
+2. Write the analytic solution of the approximation of \(u(x, \Delta t)\) given above in (i).
+
+3. Show that the extremum principle is kept under some condition. What is the condition? Is it similar to a stability condition learned in class? Explain.
+
+\end{document}
+

@@ -1,0 +1,177 @@
+\documentclass{article}
+\usepackage{preamble}
+\input{preamble}
+% Redefine \part to have the desired format
+\makeatletter
+\renewcommand\thepart{\arabic{part}} % Use Arabic numbers for \part
+\makeatother
+\titleformat{\section}
+  {\normalfont\LARGE\bfseries} % Format for numbered sections
+  {\thesection.}              % Numbering format
+  {1em}                       % Space between number and title
+  {}
+
+% Define appearance for \section*
+\titleformat{name=\section,numberless}
+  {\normalfont\LARGE\bfseries} % Format for unnumbered sections
+  {}
+  {0pt}
+  {}
+
+% Similarly, define for \subsection and \subsection* if needed
+\titleformat{\subsection}
+  {\normalfont\Large\bfseries}
+  {\thesubsection.}
+  {1em}
+  {}
+
+\titleformat{name=\subsection,numberless}
+  {\normalfont\Large\bfseries}
+  {}
+  {0pt}
+  {}
+
+\graphicspath{ {images/} }
+%%%%%%%%%%%%%%%% Document %%%%%%%%%%%%%%%%
+\begin{document}
+\begin{center}
+  {\huge \underline{Variational Methods 049064} \\[7pt] Exercise 1}
+\end{center}
+\part{Analytic Exercises}
+\section*{Question 1 (Linear Diffusion)}
+Let $u(x,t)$ be a real-valued function. Consider the 1D, unbounded domain, linear diffusion, defined by
+\begin{equation} \label{eq:q1PDE}
+u_t = u_{xx}, \quad u(x,0) = f(x), \quad t \in [0, \infty)
+\end{equation}
+where \(t\) is the time variable, \(x\) is the spatial variable, \(u_t\) and \(u_{xx}\) are respectively the time derivative and the second spatial derivative of \(u\), and the function \(f(x)\) is the initial condition.
+
+(a) For a real-valued function \(u \in \mathbb{R}\), show that the solution of the above PDE is a Gaussian convolution with the initial condition, namely
+\begin{equation}
+  u(x,t) = f(x) * g_{\sigma(t)}(x)
+\end{equation}
+where $g_{\sigma(t)} = a$ is the Gaussian kernel.
+
+\textbf{\ul{Solution}:} 
+
+Denote:
+\[
+  (\mathcal{F} \left\{ u \right\})(s) =   \hat{u}(s,t) = \int_{-\infty}^{\infty} e^{-i 2 \pi s x} u(x,t) \d{x}
+\]
+
+We apply the spatial FT to both sides of~\cref{eq:q1PDE}, and get:
+\[
+  \int_{-\infty}^{\infty} e^{- i 2 \pi s x} u_{t} \d{x} = \int_{-\infty}^{\infty} e^{-i 2\pi s x} u_{xx}   \d{x}
+\]
+
+
+Using the Fourier Transform of the n-th derivative:
+\[
+  \mathcal{F} \left\{ \frac{d^{(n)}g(x)}{d x^n}  \right\} = (i 2\pi s )^{n} \mathcal{F} \left\{ g \right\}
+\]
+and the fact that the spatial FT of a time derivative is the time derivative of the spatial FT, we get:
+\[
+  \frac{\partial }{\partial t} \hat{u}(s,t) = - (2 \pi s)^2  \cdot  \hat{u}(s,t)   
+\]
+This is a simple ODE wrt to $t$. We solve this  and get:
+\[
+  \hat{u}(s,t) = c(s) e^{- (2 \pi s)^2 t}  
+\]
+we plug $t=0$ into the above equation, and get:
+\[
+  \hat{u}(s,0) = c(s) 
+\]
+and since
+\[
+  \hat{u}(s,0) = \int_{-\infty}^{\infty} e^{-i 2 \pi s x} u(x,0) \d{x} = \int_{-\infty}^{\infty} e^{-i 2 \pi s x} f(x) \d{x} = \hat{f}(s)  
+\]
+we get:
+\[
+  \hat{u}(s,t) = \hat{f}(s) e^{-(2 \pi s) ^2 t}   
+\]
+i.e. we notice that the spatial FT of $u$ is a multiplication of two functions. Applying the inverse spatial FT, we get that $u(x,t)$ is a convolution of the inverse FT of those functions, i.e.:
+\[
+  u(x,t) = f(x) \ast \Big( \mathcal{F}^{-1} \left\{ e^{-4 \pi^2 s ^2 t}  \right\} (x) \Big)
+\]
+Recalling that:
+\[
+  \mathcal{F}^{-1} \left\{ e^{- \pi s ^2}  \right\}(x) = e^{- \pi x ^2} 
+\]
+and the Fourier stretch theorem:
+\[
+  \big(\mathcal{F} \left\{ f(ax) \right\}\big)(s) = \frac{1}{|a|} \, \hat{f}(\frac{s}{a}) 
+\]
+we get that:
+\[
+  \big( \mathcal{F} ^{-1}  \left\{ e^{ - 4 \pi ^2 s ^2 t} \right\} \big) (x) =  \frac{1}{\sqrt{ 4 \pi t }} e^{ - \pi \frac{x ^2}{4 \pi t}}  = \frac{1}{\sqrt{  4 \pi t }} e^{ - \frac{x ^2}{4t}} 
+\]
+If we denote:
+\[
+  g_{\sigma (t)}(x) = \frac{1}{\sqrt{ 4 \pi t }} e^{- \frac{x ^2}{4t}} 
+\]
+we get:
+\[
+  \boxed  {u(x,t) = f(x) \ast g_{\sigma(t)}(x)}
+\]
+
+--------------------------------------------- 
+
+Then, find the relation between the time variable \(t\) and the standard deviation \(\sigma\).
+
+\textbf{\ul{Solution:}}
+
+By the formula:
+\[
+  g_{\sigma (t)}(x) = \frac{1}{\sqrt{ 4 \pi t }} e^{- \frac{x ^2}{4t}} 
+\]
+We notice that 
+---------------------------------------------
+(b) Assume the initial condition \(f(x)\) is
+
+\begin{equation}
+f(x) = \sin(\omega_1 x) + \sin(\omega_2 x)
+\end{equation}
+
+where \(\omega_1, \omega_2\) are positive constants. Use $u(x,t) = f(x) * g_\sigma(t)(x)
+ $ to show that \(u(t, x)\) is 
+
+\begin{equation}
+u(x,t) = \sin(\omega_1 x)e^{-\omega_1^2 t} + \sin(\omega_2 x)e^{-\omega_2^2 t}.
+\end{equation}
+
+(c) For the solution:
+\[
+  u(x,t) = \sin(\omega_1 x)e^{-\omega_1^2 t} + \sin(\omega_2 x)e^{-\omega_2^2 t}.
+\]
+
+1. Write the explicit backward-difference in time expression of \(u(x, \Delta t)\). Keep the spatial coordinates continuous.
+
+2. Write the analytic solution of the approximation of \(u(x, \Delta t)\) given above in (i).
+
+3. Show that the extremum principle is kept under some condition. What is the condition? Is it similar to a stability condition learned in class? Explain.
+
+
+
+
+
+Let $u(x,t): \mathbb{R} \times [0, \infty] \to \mathbb{R}$ denote the temperature at position $x$ at time $t$. Solve the IVP:
+\begin{equation} \label{eq:unbounded1DHeatEqn}
+  u_{t} = u_{xx} \quad, u(x,t=0) = f(x)
+\end{equation}
+where $f$ is the initial condition. 
+
+\begin{enumerate}[label=\alph*), ref=\alph*]
+\item \ul{Claim}: The solution of~\cref{eq:unbounded1DHeatEqn} is a Gaussian convolution with the initial condition, namely:
+\[
+  u(x,t) = f(x) \ast g_{\sigma(t)} (x)
+\]
+where $g_{\sigma(t)}$ is the Gaussian Kernel. 
+
+\begin{proof}
+a
+\end{proof}
+
+  \item 
+\end{enumerate}
+
+\end{document}
+
