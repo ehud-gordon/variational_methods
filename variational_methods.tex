@@ -107,15 +107,15 @@ for every $v \in X$. We call the operator $D_{E}(u)$ the \textbf{Gâteaux deriva
 \end{definition}
 
 
-\begin{example} Let $X$ be $C^{1}[a,b]$, and let $E: C^{1}[a,b] \to \mathbb{R}$ be  $E(u) = \int_{a}^{b} |u(t)| ^2 \d{t}$. Then, for each $u \in C^{1}[a,b]$ we have that the integral is finite, and hence $E$ is defined. Let $v \in C^{1}[a,b]$ be an arbitrary direction. Then:
+\begin{example} \label{eg:l2NormFunctional} Let $X$ be $C^{1}[a,b]$, and let $E: C^{1}[a,b] \to \mathbb{R}$ be  $E(u) = \int_{a}^{b} |u(t)| ^2 \d{t}$. Then, for each $u \in C^{1}[a,b]$ we have that the integral is finite, and hence $E$ is defined. Let $v \in C^{1}[a,b]$ be an arbitrary direction. Then:
 \begin{align*}
  \frac{E(u+\lambda v)-E(v)}{\lambda} &= \frac{1}{\lambda} \int_{a}^{b}  (u(x) +\lambda v(x) ) ^2 - u(x) ^2 \d{x}  = 2 \int_{a}^{b} u(x) v(x) \d{x} + \lambda \int_{a}^{b} (v(x)) ^2 \d{x} 
 \end{align*}
 Letting $\lambda \to 0$,  we get:
 \[
-  \frac{d E(u+\lambda v)}{d \lambda} \Big|_{\lambda = 0} = \delta E(u ; v) =  2 \int_{a}^{b} \big( u(x) v(v) \big) \d{x}
+  \frac{d E(u+\lambda v)}{d \lambda} \Big|_{\lambda = 0} = \delta E(u ; v) =  2 \int_{a}^{b} \big( u(x) v(x) \big) \d{x}
 \]
-  or equivalently, define $f(\lambda) = E(u + \lambda v) = \int_{a}^{b} | (u + \lambda v)(x) |  \d{x}$. Then $f'(\lambda) = 2 \int_{a}^{b} (u v)(x) \d{x} + \lambda \int_{a}^{b} v(x) ^2 \d{x}$, and $\delta E(u ; v) = f'( \lambda) \Big|_{\lambda = 0} = f'(0) = 2 \int_{a}^{b} (uv) (x) \d{x}$ .
+Or equivalently, define $f(\lambda) = E(u + \lambda v) = \int_{a}^{b} | (u + \lambda v)(x) |  \d{x}$. Then $f'(\lambda) = 2 \int_{a}^{b} (u v)(x) \d{x} + \lambda \int_{a}^{b} v(x) ^2 \d{x}$, and $\delta E(u ; v) = f'( \lambda) \Big|_{\lambda = 0} = f'(0) = 2 \int_{a}^{b} (uv) (x) \d{x}$ .
 
 Since this exists for all $v \in C^{1}[a,b]$, we say that $E$ is Gâteaux differentiable at $u \in C^{1}[a,b]$, and we have its \textit{Gâteaux derivative}:
 \[
@@ -160,14 +160,92 @@ Differentiating with respect to $\lambda$, we get:
   Therefore we have that $\delta E (u ; v) = f'(0)$ is undefined. 
 \end{example}
 
-
-
-\begin{definition}[Fréchet Derivative] Let $X,Y$ be normed vector spaces, and $f: X \to Y$.   The Fréchet derivative of $f$ at a point $x \in X$ is a bounded linear operator $A: X \to Y$ such that:
-
+\begin{definition}[Fréchet Derivative] Let $X,Y$ be normed vector spaces, and $f: X \to Y$. The Fréchet derivative of $f$ at a point $x \in X$ is a bounded linear operator $A: X \to Y$ such that:
 \[
   \lim_{\lVert h \rVert \to 0} \frac{ \lVert f(x+h) - f(x) - Ah \rVert_Y  }{ \lVert h \rVert_X  } = 0
 \]
  \end{definition}
+
+\subsection{Functional Derivative}
+\begin{definition}[Functional Differential] Let $X$  be a Banach space, and $E$ a functional defined on $X$. The \textbf{differential} of $E$ at point $u \in X$, is the linear functional $\delta E[u, \cdot ]$ on $X$ defined by the condition that for all directions $v \in X$:
+\[
+  E[u + v] - E[u]  = \delta E[u ; v] + \lambda \lVert v \rVert 
+\]
+where $\lambda$ is a small number that depends on $\lVert v \rVert$ in such a way that $\lambda \to 0$ as $\lVert v \rVert \to 0$. The means that $\delta E[u, \cdot ]$ is the Fréchet Derivative of $E$ at $u$.
+
+However, this notion of functional differential is so strong it may not exist, and in those cases a weaker notion, like the Gâteaux derivative is preferred. Thus, the functional differential is defined as the directional derivative:
+\[
+  \delta E[u, v] := \lim_{\lambda \to 0} \frac{E[u + \lambda v] -E[u]}{\lambda} = \Big[ \frac{d}{\d{\lambda}} E[u + \lambda v] \Big]_{\lambda = 0}
+\]
+\end{definition}
+
+\begin{definition}[Functional Derivative] The \textbf{functional derivative}  $\frac{\delta E}{\delta u}$ of a functional $E$ at a point $u$ measures the sensitivity of $E$ to small variations in the function $u$. 
+
+  Assume the domain of the functional $E$ is the space of differentiable functions $u$ defined on some space $\Omega$, and $E$ is of the form:
+\[
+  E[u] = \int_{\Omega} L \big( x, u (x), D u(x) \big) \d{x}
+\]
+  if this is the case, and, moreover, the functional \ul{differential} $\delta E[u, v]$ can be written as the integral of $v$ times another function, denoted $\delta E / \delta u$:
+\[
+  \delta E[u, v] = \int_{\Omega} \frac{\delta E}{\delta u} (x) v(x) \d{x}
+\]
+then this function $\delta E / \delta u$ is called the \ul{functional derivative} of $E$ at $u$. 
+\end{definition}
+
+\begin{remark}[functional derivative and first-order approximation] The functional derivative $\frac{\delta E}{\delta u}$ is defined such that for a small perturbation $v(x)$, we have:
+\[
+  E[u+ v] - E[u] = \int \frac{\delta E}{\delta u}(x) v(x) \d{x} + o( \lVert  v \rVert  )
+\]
+where $o ( \lVert  v \rVert  )$ represent terms of higher order than linear in $v$
+i.e. 
+\[
+  E[u+ v] = E[u] + \int \frac{\delta E}{\delta u}(x) v(x) \d{x} + o( \lVert v \rVert  )
+\]
+Therefore we see that the first-order approximation of $E$ at $u+v$ near $u$, is the integral of the functional derivative times the delta $v$.  
+\end{remark}
+
+
+\begin{example} In example~\ref{eg:l2NormFunctional}, we've defined $E: C^{1}[a,b] \to \mathbb{R}$ by
+\[
+  E(u) = \int_{a}^{b} |u(t)| ^2 \d{t}
+\]
+and saw that:
+\[
+  \delta E(u ; v) =  \int_{a}^{b} 2 u(x) v(x) \d{x}
+\]
+Therefore, 
+\[
+  \frac{\delta E}{\delta u}(x) = 2 u(x)
+\]
+
+\end{example}
+
+\begin{example} Let
+  \[
+    L[P(x)] = \int P(x) \log  P(x)
+  \]
+
+Recall that near a point $x$, we have that $\log (x+ \Delta x) = \log x + \frac{\Delta x}{x} + o (\Delta x)$. 
+
+  Let $\delta P$ denote a small perturbation of $P$.   Therefore, $\log  (P + \delta P)  \approx \log  P + \frac{\delta P}{P}$ (valid for $\delta P / P << 1)$. Therefore
+\begin{align*}
+  L[P + \delta P] &= \int \Big( P + \delta P \Big)  \log  \big( P + \delta P \big) \d{x} \\
+  & \approx \int \big( P + \delta P \big) (\log  P + \frac{\delta P}{P}) \d{x} \\
+  &= \int P \log  P  + \delta P + \delta P \log P + \frac{(\delta P) ^2}{P}  \d{x}
+\end{align*}
+  neglecting $\frac{(\delta P) ^2}{P}$, we get:
+\[
+  L[P + \delta P] - L[P] =  \int (1 + \log P) \delta P \d{x}
+\]
+Which is exactly of the form of the functional derivative. Hence:
+\[
+  \frac{\delta L}{\delta P} = 1 + \log P(x)
+\]
+
+
+\end{example}
+
+
 
 \section{Perona-Malik}
 \begin{theorem}[Finite Difference and Flow] \label{th:FDAndFlow} Let $u$ be a 1D array. 

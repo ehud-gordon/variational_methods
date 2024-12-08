@@ -49,7 +49,7 @@ where \(t\) is the time variable, \(x\) is the spatial variable, \(u_t\) and \(u
 \begin{equation}
   u(x,t) = f(x) * g_{\sigma(t)}(x)
 \end{equation}
-where $g_{\sigma(t)} = a$ is the Gaussian kernel.
+where $g_{\sigma(t)}$ is the Gaussian kernel.
 
 \textbf{\ul{Solution}:} 
 
@@ -123,55 +123,152 @@ By the formula:
 \[
   g_{\sigma (t)}(x) = \frac{1}{\sqrt{ 4 \pi t }} e^{- \frac{x ^2}{4t}} 
 \]
-We notice that 
+and the standard Gaussian:
+\[
+  \frac{1}{\sqrt{ 2 \pi \sigma ^2 }} e^{- \frac{x ^2}{2 \sigma ^2}} 
+\]
+we get that $2t = \sigma ^2$, i.e. $t = \frac{\sigma}{\sqrt{ 2 }}$
+
 ---------------------------------------------
+
 (b) Assume the initial condition \(f(x)\) is
 
 \begin{equation}
 f(x) = \sin(\omega_1 x) + \sin(\omega_2 x)
 \end{equation}
-
 where \(\omega_1, \omega_2\) are positive constants. Use $u(x,t) = f(x) * g_\sigma(t)(x)
- $ to show that \(u(t, x)\) is 
+ $ to show that \(u(x,t)\) is 
 
 \begin{equation}
 u(x,t) = \sin(\omega_1 x)e^{-\omega_1^2 t} + \sin(\omega_2 x)e^{-\omega_2^2 t}.
 \end{equation}
 
-(c) For the solution:
+\textbf{\ul{Solution:}}
+
+From a Fourier table, we have:
 \[
-  u(x,t) = \sin(\omega_1 x)e^{-\omega_1^2 t} + \sin(\omega_2 x)e^{-\omega_2^2 t}.
+  \mathcal{F} \left\{ \sin(\omega x) \right\} =  \frac{1}{2 i} \Big( \delta(s- \frac{\omega}{2 \pi}) - \delta(s + \frac{\omega}{2 \pi}) \Big) 
 \]
-
-1. Write the explicit backward-difference in time expression of \(u(x, \Delta t)\). Keep the spatial coordinates continuous.
-
-2. Write the analytic solution of the approximation of \(u(x, \Delta t)\) given above in (i).
-
-3. Show that the extremum principle is kept under some condition. What is the condition? Is it similar to a stability condition learned in class? Explain.
-
-
-
-
-
-Let $u(x,t): \mathbb{R} \times [0, \infty] \to \mathbb{R}$ denote the temperature at position $x$ at time $t$. Solve the IVP:
-\begin{equation} \label{eq:unbounded1DHeatEqn}
-  u_{t} = u_{xx} \quad, u(x,t=0) = f(x)
+From our previous derivations, we have that
+\[
+  \mathcal{F} \left\{ \frac{1}{\sqrt{ 4 \pi t }} e^{- \frac{x ^2}{4t}}  \right\}  = e^{- 4 \pi ^2 s ^2 t}
+\]
+Therefore, using the fact that the FT of a convolution is the multiplication of the respective Fourier transforms, we get:
+\begin{align*}
+  \mathcal{F} \left\{ \sin(\omega x) \ast g_{\sigma(t)}(x)   \right\}  &= \Big( \frac{1}{2 i} \big( \delta(s- \frac{\omega}{2 \pi}) - \delta(s + \frac{\omega}{2 \pi}) \big) 
+  \Big) \cdot  \Big( e^{- 4 \pi ^2 s ^2 t}  \Big) \\
+  &=  \frac{1}{2 i} \Big( \delta(s- \frac{\omega}{2 \pi}) e^{- 4 \pi ^2 s ^2 t} - \delta(s + \frac{\omega}{2 \pi}) e^{-4 \pi ^2 s ^2 t} \Big) \\
+  &= \frac{1}{2 i} \Big( \delta(s-\frac{\omega}{2 \pi}) e^{- \omega ^2 t } - \delta(s + \frac{\omega}{2 \pi}) e^{- \omega ^2 t} \Big) \\
+  &= \frac{1 }{2 i} e^{- \omega ^2 t} \Big( \delta(s- \frac{\omega}{2 \pi}) - \delta(s + \frac{\omega}{2 \pi}) \Big) 
+\end{align*}
+i.e.:
+\begin{equation} \label{eq:q1MidDeriv}
+  \mathcal{F} \left\{ \sin(\omega x) \ast g_{\sigma(t)}(x)   \right\}  = \frac{1 }{2 i} e^{- \omega ^2 t} \Big( \delta(s- \frac{\omega}{2 \pi}) - \delta(s + \frac{\omega}{2 \pi}) \Big) 
 \end{equation}
-where $f$ is the initial condition. 
 
-\begin{enumerate}[label=\alph*), ref=\alph*]
-\item \ul{Claim}: The solution of~\cref{eq:unbounded1DHeatEqn} is a Gaussian convolution with the initial condition, namely:
+
+We wish to apply the inverse FT. We notice $\frac{1 }{2 i} e^{- \omega ^2 t}$ is a constant wrt to $s$, and we recall that:
 \[
-  u(x,t) = f(x) \ast g_{\sigma(t)} (x)
+  \mathcal{F} ^{-1}  \left\{  \delta(s \mp  \frac{\omega}{2 \pi} ) \right\} = e^{\pm  i \omega x} 
 \]
-where $g_{\sigma(t)}$ is the Gaussian Kernel. 
+and therefore:
+\[
+  \frac{1}{2 i} \mathcal{F} ^{-1} \Big\{ \delta(s- \frac{\omega}{2 \pi}) - \delta(s + \frac{\omega}{2 \pi})  \Big\} = \frac{1 }{2 i} \big( e^{ i \omega x} - e^{-i \omega x}  \big) = \sin(\omega x)
+\]
 
-\begin{proof}
-a
-\end{proof}
+We apply the inverse Fourier transform on both sides of~\cref{eq:q1MidDeriv}. Using the transform linearity, we get:
+\[
+  \sin(\omega x) \ast  g_{\sigma(t)}(x) = \sin(\omega x)  e^{-\omega ^2 t} 
+\]
 
-  \item 
-\end{enumerate}
+Let $f(x) = \sin(\omega_1 x) + \sin(\omega_2x)$.
+Convolution is linear, therefore
 
+\begin{align*}
+  f(x) \ast g_{\sigma(t)}(x) &= (\sin(\omega_1 x) \ast g_{\sigma(t)}(x) ) + ( \sin(\omega_2 x) \ast g_{\sigma(t)}(x) ) \\
+  &= \sin(\omega_1 x)  e^{-\omega_1^2 t}  + \sin(\omega_2 x)  e^{-\omega_2 ^2 t} 
+\end{align*}
+---------------------------------------------
+
+(c) For the solution:
+\begin{equation} \label{eq:q1FSinSol}
+  u(x,t) = \sin(\omega_1 x)e^{-\omega_1^2 t} + \sin(\omega_2 x)e^{-\omega_2^2 t}
+\end{equation}
+
+(i) Write the explicit backward-difference \ul{in time} expression of \(u(x, \Delta t)\). Keep the spatial coordinates continuous.
+
+(ii) Write the analytic solution of the approximation of \(u(x, \Delta t)\) given above in (i).
+
+\textbf{\ul{Solution:}}
+
+The backward-difference is:
+\[
+  u_{t}(x,t) = \frac{u(x,t) - u(x,t -\Delta t)}{\Delta t}
+\]
+Therefore, we get that:
+\begin{align*}
+  & \frac{u(x,t) - u(x,t -\Delta t)}{\Delta t} = u_{xx}(x, t) \\
+  \Rightarrow \ & u(x,t) = u(x,t-\Delta t) + \Delta t \, u_{xx}(x,t)
+\end{align*}
+at $t= \Delta t$, we get:
+\begin{align*}
+  u(x,\Delta t) &= u(x,0) + \Delta t \, u_{xx}(x, \Delta t) = f(x) + \Delta t \, u_{xx}(x,\Delta t) \\
+\end{align*}
+We compute $u_{xx}(x,t)$ from the solution at~\cref{eq:q1FSinSol}, and get:
+\[
+  u_{xx}(x,t) = -\omega_1 ^2 \sin(\omega_1 x) e^{-\omega_1 ^2 t} - \omega_2 ^2 \sin(\omega_2 x) e^{- \omega_2 ^2 t}  
+\]
+we plug the above into our expression of $u(x, \Delta t)$ and we get:
+\begin{align*}
+  u(x, \Delta t) &= \sin(\omega_1x) + \sin(\omega_2x)  + \Delta t \cdot \big( -\omega_1 ^2 \sin(\omega_1 x) e^{-\omega_1 ^2 \Delta t} - \omega_2 ^2 \sin(\omega_2 x) e^{- \omega_2 ^2 \Delta t} \big) \\
+  &= \sin(\omega_1 x) \big( 1 - \Delta t \omega_1 ^2 e^{-\omega_1^2 \Delta t}  \big) + \sin(\omega_2 x) \big( 1 - \Delta t \omega_2 ^2 e^{-\omega_2^2 \Delta t}  \big)
+\end{align*}
+
+ ---------------------------------------------
+
+(iii) Show that the extremum principle is kept under some condition. What is the condition? Is it similar to a stability condition learned in class? Explain.
+
+\ul{\textbf{Solution}:}
+
+The initial condition is:
+\[
+  u(x,0) = f(x) = \sin(\omega_1 x) e^{-\omega_1 ^2 t} + \sin(\omega_2 x) e^{-\omega_2 ^2 t}  
+\]
+Since $\omega_i > 0$, we have that  $-2 \leq f(x) \leq 2$
+
+We have two modes $\sin(\omega_i x)$, with their amplitudes being:
+\[
+  1-\Delta t \omega_i ^2 e^{- \omega_i ^2 \Delta t} 
+\]
+We shall examine the amplitudes of the modes, and determine whether they violate the maximum principle, creating new maxima. 
+
+
+Since $\omega_i > 0$ and $\Delta t > 0$, we have that $\Delta t \omega_i ^2 > 0$ and also we have that $e^{-\omega_i ^2 \Delta t} > 0$, therefore:
+\begin{align*}
+  & \Delta t w_i ^2 e^{- \omega_i ^2 \Delta t} > 0 \\
+\Rightarrow \ & - \Delta t \omega_i ^2 e^{- \omega_i ^2 \Delta t} < 0 \\
+  \Rightarrow \ & 1 - \Delta t \omega_i ^2 e^{- \omega_i ^2 \Delta t} < 1
+\end{align*}
+
+define:
+\[
+  h(\Delta t) = 1- \Delta t \omega_i ^2 e^{-\omega_i ^2 \Delta t} 
+\]
+differentiating, we get that $h$ has a minimum at $\Delta t = \frac{1}{\omega_i ^2}$, and its value is $h(\Delta t = \frac{1}{\omega_i ^2}) = 1-e^{-1}$. 
+
+Therefore:
+\begin{align*}
+0 < 1- e^{-1} \leq 1- \Delta t \omega_i ^2 e^{-\omega_i ^2 \Delta t}  < 1
+\end{align*}
+
+
+Therefore, after one iteration, the amplitude of the modes decreases, and we have:
+\[
+  -2 < u(x,\Delta t) < 2
+\]
+
+Therefore, assuming that $u$ is bounded and decays at infinity, it satisfies the maximum principle, and no new maxima are created.
+
+This is similar to the CFL stability condition learned in class, where we've ensured that the spatial and temporal discretization steps are such that no new maxima is accidentally created.
 \end{document}
 
